@@ -1,0 +1,164 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+library(ggplot2)
+texas = read.csv("data/texas.csv")
+dim(texas)
+head(texas)
+#View(texas)
+```
+
+```{r}
+g <- ggplot(data = texas, aes(x = long, y = lat))
+g + geom_point()
+```
+
+```{r}
+g + geom_polygon(aes(group = group))
+```
+
+```{r}
+texas2 = texas[sample(nrow(texas)), ] #Row order matters!
+ggplot(data = texas2, aes(x = long, y = lat)) +
+geom_polygon(aes(group = group))
+```
+
+```{r}
+#install.packages("maps")
+#help(package = "maps")
+library(maps)
+counties = map_data("county") # Using the built-in USA county
+# map dataset.
+ggplot(data = counties, aes(x = long, y = lat)) + geom_polygon(aes(group = group, fill = group))
+```
+
+```{r}
+tx <- g + geom_polygon(aes(group = group, fill = bin))
+tx
+```
+
+```{r}
+tx + ggtitle("Population of Texas Counties")
+#Creates a ggplot2 title, and adds it to the tx graph
+```
+
+```{r}
+g <- ggplot(data=diamonds, aes(x=carat, y=price))
+g1 = g + geom_point(alpha = 0.1, size=0.5)
+#str(g1)
+g1
+```
+
+```{r}
+g + geom_point(alpha = 0.1, size=0.5, shape=20) + coord_trans(y = "log10", x="log10")
+```
+
+```{r}
+g + geom_point(size=0.5, shape=20) + coord_trans(y = "log10", x="log10")
+```
+
+```{r}
+d2 <- subset(diamonds, color =="D")
+cc <- ggplot(data = d2, aes(x =color)) + geom_bar(aes(fill =cut), position = "fill")
+cc
+```
+
+```{r}
+ggplot(data = mpg, aes(x =displ, y = hwy)) +geom_point(aes(color = cty))
+```
+
+```{r}
+par(mfrow=c(1,2))
+ggplot(data = mpg, aes(x =displ, y = hwy)) +geom_point(aes(shape = fl))
+last_plot() +
+scale_shape_manual(values =c(0, 15, 1, 16, 3))
+```
+
+```{r}
+#install.packages("RColorBrewer")
+library(RColorBrewer)
+display.brewer.all()
+```
+
+```{r}
+# install.packages("ggthemes")
+library(ggthemes)
+tx + ggtitle("Texas Map")  + ylab("") + xlab("") + theme_wsj() + scale_fill_wsj(palette = "black_green")
+# theme(panel.background = element_rect(fill='white', colour='black')) # other option
+```
+
+```{r}
+tx + scale_fill_brewer(palette = "Blues") +xlab("") +ylab("") +theme_bw() +ggtitle("Population of Texas Counties")
+#  + coord_map() Error
+```
+
+```{r}
+q <- ggplot(data = mpg, aes(x =displ, y = hwy)) +geom_point(aes(color = cty)) + theme(legend.position = "bottom")
+q
+```
+
+```{r}
+#Continuous.
+q + guides(color = "colorbar")
+#Discrete.
+q + guides(color = "legend")
+#Neither.
+q + guides(color = "none")
+```
+
+```{r}
+tx + scale_fill_grey(name =ftx"Legend")
+```
+
+```{r}
+tx + scale_fill_grey(name ="Legend", labels = c("label 1","label 2", "label 3","label 4","label 5"))
+```
+
+```{r}
+unique(texas$bin)
+levels(texas$bin)
+```
+
+```{r}
+tx + scale_fill_grey(name ="Legend", labels = levels(texas$bin))
+```
+
+```{r}
+library(maps)
+library(ggplot2)
+world <- map_data("world")
+town_on_globe <- ggplot(world, aes(x=long, y=lat, group=group) ) +
+ geom_path(color='gray10', size=0.3) +
+ geom_point(x=2, y=49, size=10, shape='*') +
+ scale_y_continuous(breaks=(-2:2) * 30) +
+ scale_x_continuous(breaks=(-4:4) * 45) +
+ coord_map("ortho", orientation=c(20, 0, 0))+  #send number in orientation is greenwich meridien (x)
+ theme(panel.grid.major = element_line(colour = "gray50"),
+ panel.background = element_rect(fill = "white"),
+ axis.text=element_blank(),
+ axis.ticks=element_blank(),
+ axis.title=element_blank() ) +
+ ggtitle("Naples, Florida")
+
+```
+
+```{r}
+town_on_globe
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+

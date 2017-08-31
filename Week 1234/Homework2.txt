@@ -1,0 +1,54 @@
+
+
+1
+Construct the matrix: code in three different ways to generate a 5 x 5 matrix that looks like this:(Hint:Try to use rbind() and cbind())
+
+2
+Find the sum of all numbers below 1000 that can be divisible by 3 or 5 (Hint: Conditionals)
+
+3
+Find the sum of the even valued terms of the Fibonacci sequence that do not exceed 4,000,000. (Hint: refer to our week1 slides)
+
+4
+Magic squares are square matrices where the row, column, diagonal and counterdiagnoal sums all equal the same number. Use R to validate that my_mat is a magic square
+
+my_mat = matrix(c(8, 3, 4, 1, 5, 9, 6, 7, 2), ncol = 3)
+
+
+5
+What is wrong with the following code? How would you fix it?(Hint: conditionals)
+
+x <- 1
+if ( x = 1 ) {cat("x is 1")
+} else{
+    cat("x is not 1")
+  }
+
+
+6
+Write a function that calculates the median absolute deviation (MAD) of a numeric vector. The median absolute deviation is a robust alternative to standard deviation as a measure of dispersion. It is defined for a vector X as:
+
+MAD = median(|Xi - median(X)|)
+
+
+7
+
+The prime factors of 13195 are 5, 7, 13 and 29. What is the largest prime factor of the number 600851475143. (Hint: Write a function)
+
+8
+A palindromic number reads the same, both forward and backward. The largest palindrome made from the product of two 2-digit numbers is:
+
+ 9009 = 91 * 99
+
+Find the largest palindrome made from the product of two 3-digit numbers.
+
+
+9
+Explain in your own words what Vectorizing a function does and when it is appropriate. Write a vectorized function that will examine an input array of numbers and return a logical array of whether each number is a palindrome.
+
+10
+Come up one or two questions you want to answer from Tips dataset (from Reshape2 package).
+
+
+
+

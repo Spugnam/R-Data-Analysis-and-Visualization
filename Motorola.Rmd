@@ -1,0 +1,96 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+dates = c("5/3/2017", "5/23/2017","5/30/2017", "6/14/2017", "7/5/2017", "7/20/2017", "8/22/2017")
+ARRIS.SURFboard.SB8200 = c(53,72,82,100, 118,	136,	170)
+NETGEAR.CM1000 = c(NA, 193,	201,	221,	235,	244,	288)
+MOTOROLA.MB8600 = c(NA, NA,	NA,	9,	17,	34,	78)
+```
+
+```{r}
+modem.sales = data.frame(dates, ARRIS.SURFboard.SB8200, NETGEAR.CM1000, MOTOROLA.MB8600)
+modem.sales
+View(modem.sales)
+```
+
+```{r}
+# Converting 1st column to dates
+modem.sales$dates <- as.Date(modem.sales$dates, format="%m/%d/%Y")
+modem.sales
+```
+
+```{r}
+lm.fit1 = lm(modem.sales$ARRIS.SURFboard.SB8200~modem.sales$dates, data=modem.sales)
+lm.fit2 = lm(modem.sales[,3] ~ modem.sales[,1], data=modem.sales)
+lm.fit3 = lm(modem.sales[,4] ~ modem.sales[,1], data=modem.sales)
+
+#op <- par(mfrow = c(2, 2))
+plot(modem.sales[,1], modem.sales$ARRIS.SURFboard.SB8200, pch = 21, bg = "orange", cex = 1.2, ylim = c(0, 280))
+abline(lm.fit1, col = "orange")
+plot(modem.sales[,1], modem.sales$NETGEAR.CM1000, pch = 21, bg = "blue", cex = 1.2, ylim = c(0, 280))
+abline(lm.fit2, col = "blue")
+plot(modem.sales[,1], modem.sales$MOTOROLA.MB8600, pch = 21, bg = "cyan", cex = 1.2, ylim = c(0, 280))
+abline(lm.fit3, col = "cyan")
+mtext("DOCSIS 3.1 Amazon Modem sales", outer = TRUE, cex = 1.5)
+#par(op)
+```
+
+```{r}
+plot(modem.sales[,1], modem.sales$ARRIS.SURFboard.SB8200, pch = 21, bg = "orange", cex = 1.2, ylim = c(0, 280))
+abline(lm.fit1, col = "orange")
+#2nd plot
+par(new = TRUE)
+plot(modem.sales[,1], modem.sales$NETGEAR.CM1000, axes = FALSE, xlab = "", ylab = "", pch = 21, bg = "blue", cex = 1.2, ylim = c(0, 280))
+abline(lm.fit2, col = "blue")
+par(new = TRUE)
+plot(modem.sales[,1], modem.sales$MOTOROLA.MB8600, axes = FALSE, xlab = "", ylab = "", pch = 21, bg = "cyan", cex = 1.2, ylim = c(0, 280))
+abline(lm.fit3, col = "cyan")
+mtext("DOCSIS 3.1 Amazon Modem sales", outer = TRUE, cex = 1.5)
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+x <- as.Date("5/3/2017",format='%m/%d/%Y')
+x
+#Assignment issue ?type?
+dates = c("5/3/2017", "5/23/2017", "5/30/2017", "6/14/2017", "7/5/2017", "7/20/2017", "8/22/2017")
+for (i in 1:length(dates)) {
+  cat(i, " ")
+  y <- as.Date(dates[i], format='%m/%d/%Y')
+  dates[i] <- y
+  cat(y, dates[i], "\n")}
+dates
+# solved by using as.Date on the dateframe feature directly
+```
+
+```{r}
+i=1
+y <- as.Date("5/3/2017", format='%m/%d/%Y')
+dates[1] <- y
+y
+typeof(y)
+typeof(dates[1])
+typeof(dates)
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+

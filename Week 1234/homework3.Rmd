@@ -1,0 +1,62 @@
+
+```{r}
+library(XML)
+tt <- htmlParse('http://www.imdb.com/chart/top?sort=ir,desc')
+movie.title=xpathSApply(tt, "//td[@class='titleColumn']//a", xmlValue)
+movie.year=xpathSApply(tt, "//td[@class='titleColumn']//span", xmlValue)
+movie.rating=xpathSApply(tt, "//td[@class='ratingColumn imdbRating']//strong", xmlValue)
+```
+
+```{r}
+movie.title[1]
+movie.year[1]
+movie.rating[1]
+```
+
+```{r}
+movies=data.frame(cbind(movie.title, movie.year, movie.rating), stringsAsFactors = FALSE)
+head(movies, 5)
+```
+
+
+
+```{r}
+strip_par = function(x) {
+  x = gsub('\\(','',x)
+  x = gsub('\\)','',x)
+  return(x)
+}
+#strip_par("(1994)")
+movies['movie.year'] = lapply(movies['movie.year'], strip_par)
+movies %>% head(5)
+```
+
+
+
+```{r}
+movies['movie.rating']=sapply(movies[,'movie.rating'], as.numeric)
+#movies[1,'movie.rating']+movies[2,'movie.rating']      # test ok
+```
+
+```{r}
+library(dplyr)
+bmovies=tbl_df(movies)
+```
+
+```{r}
+arrange(summarise(group_by(bmovies, movie.year), count = n()), desc(count))
+```
+
+```{r}
+mean(movies[,'movie.rating'])
+```
+
+```{r}
+summarise(group_by(bmovies, movie.year), count = n())
+#group_by(bmovies, movie.year, ) %>% top_n(5)
+``` 
+
+```{r}
+
+```
+

@@ -1,0 +1,76 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+plot(cars)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file).
+```{r}
+vnames = load("/Users/Quentin/Documents/NYCDataScienceAcademy/R Data Analysis and Visualization/Week 4/Knicks.rda")
+```
+
+```{r}
+View(data)
+```
+
+```{r}
+wins = group_by(data, season) %>% summarise(., win.ratio=( sum(win=='W') /n()) ) 
+wins
+```
+
+```{r}
+g <- ggplot(data=wins, aes(x=season, y=win.ratio)) 
+g + geom_bar(aes(fill=win.ratio), stat="identity") #identity to use value vs the count
+```
+
+```{r}
+wins2 = group_by(data, season) %>% 
+  summarise(., 
+            win.ratio.home=( sum(win=='W' & visiting=='0') /sum(visiting=='0')), 
+            win.ratio.away=( sum(win=='W'& visiting=='1') /sum(visiting=='1')) ) 
+wins2
+```
+
+```{r}
+g <- ggplot(data=wins2, aes(x=season)) 
+g + geom_bar(aes(y=win.ratio.home, fill = "var0"), stat="identity") + geom_bar(aes(y=win.ratio.away, fill = "var1"), stat="identity")
+```
+
+```{r}
+points = group_by(data, season) %>% summarise(., points_scored=sum(points)  ) 
+points
+```
+
+```{r}
+g <- ggplot(data=data, aes(x=points))
+g + geom_histogram(binwidth = 1) + facet_wrap( ~ season)
+```
+
+```{r}
+wins3 = group_by(data, opponent) %>% 
+  summarise(., 
+            win.ratio=( sum(win=='W') /n()) ,
+            points.diff = mean(points-opp) ) %>%
+  arrange(desc(win.ratio))
+wins3
+```
+
+```{r}
+g <- ggplot(data=wins3, aes(x=win.ratio, y=points.diff))
+g + geom_point() + geom_smooth(method=lm) 
+
+```
+
+```{r}
+
+```
+
